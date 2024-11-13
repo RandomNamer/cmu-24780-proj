@@ -1,0 +1,33 @@
+# Compiling in Visual Studio Developer Command Prompt or Developer Power Shell
+## To compile
+    (Copy fssimplewindow.cpp and fssimplewindow.h to the working directory)
+    cl ps3-1.cpp fssimplewindow.cpp
+## To run
+    .\ps3-1.exe
+
+
+
+# Compiling in macOS Terminal
+## Do it once for each program
+    (Copy fssimplewindowcpp.cpp fssimplewindowobjc.m fssimplewindow.h to the working directory)
+    mkdir -p test.app/Contents/MacOS
+    clang -c fssimplewindowobjc.m
+
+## After doing above steps compile by
+    clang++ ps3-1.cpp fssimplewindowcpp.cpp fssimplewindowobjc.m -framework Cocoa -framework OpenGL -o test.app/Contents/MacOS/exe
+
+## To run
+    test.app/Contents/MacOS/exe
+
+
+
+# Compiling in Linux Terminal
+## Preparation
+    (Install OpenGL (mesa) libraries)
+## To compile
+    (Copy fssimplewindow.cpp and fssimplewindow.h to the working directory)
+    clang++ ps3-1.cpp fssimplewindow.cpp -lX11 -lGL -lGLU
+       OR
+    g++ ps3-1.cpp fssimplewindow.cpp -lX11 -lGL -lGLU
+## To run
+    ./a.out
