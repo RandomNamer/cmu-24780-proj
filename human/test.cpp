@@ -2,10 +2,12 @@
 // Created by Zeyu Zhang on 11/12/24.
 //
 #include "fssimplewindow.h"
+#include "Human.h"
 #include <iostream>
 
 int main() {
     FsOpenWindow(16,16,800,600,1);
+    Human(1, 1.0f);
     while(FSKEY_NULL==FsInkey()) {
         FsPollDevice();
         glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
