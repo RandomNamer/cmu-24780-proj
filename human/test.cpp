@@ -7,17 +7,15 @@
 
 int main() {
     FsOpenWindow(16,16,800,600,1);
-    Human(1, 1.0f);
-    while(FSKEY_NULL==FsInkey()) {
+    Human::Config config = {1, 9.8, 0.1, 0, {30, -15}, {400, 300}, Human::DEFAULT};
+    Human human(config);
+    FsPassedTime();
+    while(FSKEY_ESC!=FsInkey()) {
         FsPollDevice();
         glClear(GL_DEPTH_BUFFER_BIT|GL_COLOR_BUFFER_BIT);
-        glBegin(GL_QUADS);
-        glColor3ub(255,0,0);
-        glVertex2i(100,100);
-        glVertex2i(700,100);
-        glVertex2i(700,500);
-        glVertex2i(100,500);
-        glEnd();
+        human.input(FsInkey());
+        human.update(FsPassedTime());
+        human.draw({0,0});
         FsSwapBuffers();
         FsSleep(25);
     }

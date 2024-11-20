@@ -7,16 +7,45 @@
 
 #include <array>
 #include <vector>
+#include "RenderContext.h"
 
 typedef int Difficulty;
 
 struct DrawContext {
     std::array<float, 2> offset;
 };
+class Human;
+
+
 
 class Human {
 public:
-    Human(Difficulty d, float g);
+
+    struct Position {
+        std::array<float, 2> head;
+        std::array<float, 2> foot;
+    };
+
+    struct DrawSpecs {
+        float scale;
+        float headSize;
+        float bodyLength;
+        float bodyWidth;
+    };
+
+    constexpr static const DrawSpecs DEFAULT = {1.f, 4, 20, 2};
+
+    struct Config {
+        Difficulty difficulty;
+        float gravity;
+        float friction;
+        float initialAngle;
+        std::array<float, 2> initialSpeed;
+        std::array<float, 2> initialPosition;
+        Human::DrawSpecs drawSpecs;
+    };
+
+    Human(Config config);
 
     void setVx(float vx) {
         this->vx = vx;
@@ -30,9 +59,15 @@ public:
         return {vx, vy};
     }
 
+    // Return the position of the center
     std::array<float, 2> getPosition() const {
         return {x, y};
     }
+
+    // Position of body parts
+    Position getDetailedPosition() const;
+
+    void input(int key);
 
     void update(int frameTimeMs);
 
@@ -43,13 +78,16 @@ private:
     float x, y;
     float gravity;
     float friction = 0.f;
+    float angle = 0.f;
     Difficulty difficulty;
+    DrawSpecs drawSpecs;
+    const RenderContext renderContext;
 
     void drawHumanOnCanvas(std::array<float, 2> origin) const;
 
-    void updatePosition(int duration);
+    void updatePosition(float duration);
 
-    void updateSpeed(int duration);
+    void updateSpeed(float duration);
 };
 
 
