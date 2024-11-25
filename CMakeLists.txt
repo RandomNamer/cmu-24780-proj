@@ -99,4 +99,5 @@ target_link_libraries(cmake-setup-check ${COCOA_LIBRARY} ${OGL_LIBRARY} ${AVFOUN
 
 # Human
 add_subdirectory(human)
+add_subdirectory(demo)
 
