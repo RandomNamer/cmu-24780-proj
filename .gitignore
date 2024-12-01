@@ -21,8 +21,8 @@ demos
 *.zip
 *.tar.gz
 *.jpg
-*.png
+#*.png
 *.mp4
 *.mov
-*.wav
+#*.wav
 
