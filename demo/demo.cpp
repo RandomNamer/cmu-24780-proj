@@ -1012,6 +1012,7 @@ int main()
 
         bool levelComplete = false;
         sound.PlayBgSoundPlay();
+        FsPassedTime();
         while (!levelComplete && FSKEY_ESC != FsInkey())
         {
             FsPollDevice();
@@ -1022,7 +1023,9 @@ int main()
                 human.input(key);
             }
 
-            human.update(7);
+            int frameTime = FsPassedTime();
+
+            human.update(frameTime);
 
             float viewOffsetY = CENTER_Y - human.get_pos_y_head();
             terrain.setViewportOffset(viewOffsetY);
