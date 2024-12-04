@@ -1,6 +1,7 @@
 #include <vector>
 #include <random>
 #include <cmath>
+#include <array>
 #include <iostream>
 #include "fssimplewindow.h"
 #include "ysglfontdata.h"
