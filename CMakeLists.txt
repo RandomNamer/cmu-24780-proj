@@ -41,6 +41,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     list(APPEND FSSIMPLE_SOURCES ${FSSIMPLE_DIR_PLATFORM_SPECIFIC}/fssimplewindow.cpp)
     list(APPEND SIMPLESOUND_HEADER ${FSSIMPLE_DIR_PLATFORM_SPECIFIC}/yssimplesound.h)
     list(APPEND SIMPLESOUND_SOURCES ${FSSIMPLE_DIR_PLATFORM_SPECIFIC}/yssimplesound.cpp)
+    
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(FSSIMPLE_DIR_PLATFORM_SPECIFIC ${PROJECT_SOURCE_DIR}/fssimple/macosx)
     list(APPEND FSSIMPLE_HEADER ${FSSIMPLE_DIR_PLATFORM_SPECIFIC}/fssimplewindow.h)
@@ -93,11 +94,32 @@ endfunction()
 
 
 add_executable(cmake-setup-check placeholder.cpp ${FSSIMPLE_SOURCES} ${FSSIMPLE_HEADER} ${YSPNG} ${SIMPLESOUND_HEADER} ${SIMPLESOUND_SOURCES} ${BITMAP_FONT_SOURCES})
-target_link_libraries(cmake-setup-check ${COCOA_LIBRARY} ${OGL_LIBRARY} ${AVFOUNDATION_FRAMEWORK})
+#target_link_libraries(cmake-setup-check ${COCOA_LIBRARY} ${OGL_LIBRARY} ${AVFOUNDATION_FRAMEWORK})
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    find_package(X11 REQUIRED)
+    find_library(ALSA_LIBRARY asound REQUIRED)
+
+    include_directories(${X11_INCLUDE_DIR})
+    list(APPEND PLATFORM_LIBRARIES ${X11_LIBRARIES} ${ALSA_LIBRARY})
+
+    target_link_libraries(cmake-setup-check
+        pthread
+        ${PLATFORM_LIBRARIES}
+        GL
+        GLU
+        ${OGL_LIBRARY}
+    )
+    
+else()
+    target_link_libraries(cmake-setup-check ${COCOA_LIBRARY} ${OGL_LIBRARY} ${AVFOUNDATION_FRAMEWORK})
+    
+endif()
+
+
 
 #Components
 
 # Human
 add_subdirectory(human)
 add_subdirectory(demo)
-
