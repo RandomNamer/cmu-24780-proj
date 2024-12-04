@@ -1,6 +1,7 @@
 #include <vector>
 #include <random>
 #include <cmath>
+#include <array>
 #include <iostream>
 #include "fssimplewindow.h"
 #include "ysglfontdata.h"
@@ -1025,7 +1026,7 @@ int main()
 
             int frameTime = FsPassedTime();
 
-            human.update(frameTime);
+            human.update(frameTime / 2);
 
             float viewOffsetY = CENTER_Y - human.get_pos_y_head();
             terrain.setViewportOffset(viewOffsetY);
